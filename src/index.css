@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+.active-menu:before {
+  content: ' ';
+  @apply absolute top-0 bottom-0 left-0 bg-rose-500 w-1;
+}

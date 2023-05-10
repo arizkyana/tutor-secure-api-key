@@ -1,10 +1,4 @@
-import {
-  FormEvent,
-  FormEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import {
   FilmIcon,
@@ -38,7 +32,7 @@ export default function App() {
   const fetchMovies = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`http://localhost:3030/`, {
+      const response = await axios.post(`/api`, {
         action: 'now-playing',
       });
       const data = response.data;
@@ -53,7 +47,7 @@ export default function App() {
   const findMovie = async (query: string) => {
     setLoading(true);
     try {
-      const response = await axios.post(`http://localhost:3030/search`, {
+      const response = await axios.post(`/api/search`, {
         query,
       });
       const data = response.data;
@@ -129,25 +123,28 @@ export default function App() {
                   Find
                 </button>
               </div>
-              {queryValue && (
-                <div className="text-sm px-3 py-2">
-                  <span className="font-bold mr-1">Result of </span>
-                  <span>{queryValue}</span>
-                </div>
-              )}
             </form>
           </div>
-          <h1 className="text-lg font-semibold mb-3">Now Playing</h1>
+          {queryValue ? (
+            <>
+              <h1 className="text-lg font-semibold mb-3 inline-block mr-1">
+                Result of
+              </h1>
+              <span className="text-rose-600 text-lg">{queryValue}</span>
+            </>
+          ) : (
+            <h1 className="text-lg font-semibold mb-3">Now Playing</h1>
+          )}
           {loading ? (
             <div className="w-full">
-              <div className="grid grid-cols-7 gap-3">
+              <div className="grid grid-cols-5 gap-3">
                 {Array.from({ length: 7 }, () => (
                   <div className="rounded-md h-[20rem] relative cursor-pointer bg-slate-400 animate-pulse"></div>
                 ))}
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-7 gap-3">
+            <div className="grid grid-cols-5 gap-3">
               {movies &&
                 movies.length > 0 &&
                 movies.map((item: Movie) => (

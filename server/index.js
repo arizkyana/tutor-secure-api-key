@@ -1,13 +1,14 @@
+/* eslint-disable no-undef */
 import express from 'express';
 import axios from 'axios';
 import env from 'dotenv';
-import cors from 'cors';
+// import cors from 'cors';
 import bodyParser from 'body-parser';
 
 env.config();
 const app = express();
 
-app.use(cors());
+// app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
@@ -21,12 +22,12 @@ app.post('/', async (req, res) => {
   }
 
   const API_ENDPOINT = {
-    'now-playing': `${process.env.BASE_URL}movie/now_playing?api_key=${process.env.KEY}&language=${process.env.DEFAULT_LANGUAGE}&page=1`,
+    'now-playing': `${process.env.BASE_URL}movie/now_playing?api_key=${process.env.API_KEY}&language=${process.env.DEFAULT_LANGUAGE}&page=1`,
     search: query =>
-      `${process.env.BASE_URL}search/movie?api_key=${process.env.KEY}&query=${query}`,
-    upcoming: `${process.env.BASE_URL}movie/upcoming?api_key=${process.env.KEY}&language=${process.env.DEFAULT_LANGUAGE}&page=1`,
+      `${process.env.BASE_URL}search/movie?api_key=${process.env.API_KEY}&query=${query}`,
+    upcoming: `${process.env.BASE_URL}movie/upcoming?api_key=${process.env.API_KEY}&language=${process.env.DEFAULT_LANGUAGE}&page=1`,
     detail: id =>
-      `${process.env.BASE_URL}movie/${id}?api_key=${process.env.KEY}`,
+      `${process.env.BASE_URL}movie/${id}?api_key=${process.env.API_KEY}`,
   };
 
   const fetchMovies = async () => {
@@ -55,7 +56,7 @@ app.post('/search', async (req, res) => {
   const fetchMovies = async () => {
     try {
       const data = await axios.get(
-        `${process.env.BASE_URL}search/movie?api_key=${process.env.KEY}&query=${query}`,
+        `${process.env.BASE_URL}search/movie?api_key=${process.env.API_KEY}&query=${query}`,
       );
       return data.data;
     } catch (error) {
